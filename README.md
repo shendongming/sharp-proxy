@@ -19,14 +19,15 @@ sharp-proxy
 -----
 安装方法:
  首先你要安装 py2.7
-
+`
 socks-thread.py 基于线程的版本 (不在维护了)
 socks-gevent.py 基于gevent的版本   pip install gevent
 
+`
 
 使用方法:
 ----
-'''
+`
 python sharp-proxy/socks-gevent.py --help
 Usage:
 一个解决复杂网络的 代理服务
@@ -38,10 +39,11 @@ ppp0: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1444
 python socks-gevent.py -i 10.3.10.55 -p 1080
 配合浏览器插件 : switchy
 
-'''
+
 
 Options:
   -h, --help            show this help message and exit
   -i IP, --ip=IP        要的绑定ip出口的地址, unix/linux/mac
                         ipconfig ,windows ipconfig 获取
   -p PORT, --port=PORT  绑定的socks5代理的本地端口推荐使用 1080
+`
