@@ -20,6 +20,9 @@ from gevent.server import StreamServer
 
 
 def hanlder(sock, address):
+    '''
+    socks5 代理的
+    '''
     global options
     print options
     rfile = sock.makefile()
@@ -101,6 +104,9 @@ python socks-gevent.py -i 10.3.10.55 -p 1080
                       help="要的绑定ip出口的地址, unix/linux/mac  ipconfig ,windows ipconfig 获取")
     parser.add_option("-p", "--port", dest="port", default=1080, type="int",
                       help="绑定的socks5代理的本地端口推荐使用 1080 ")
+
+    #parser.add_option("-p2", "--port2", dest="port2", default=1082, type="int",
+    #                  help="绑定的http代理的本地端口推荐使用 1080 ")
 
     options, arg = parser.parse_args()
     # print help(options)

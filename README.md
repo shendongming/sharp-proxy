@@ -46,3 +46,10 @@ sharp-proxy
       -i IP, --ip=IP        要的绑定ip出口的地址, unix/linux/mac
                             ipconfig ,windows ipconfig 获取
       -p PORT, --port=PORT  绑定的socks5代理的本地端口推荐使用 1080
+
+----
+
+todo:socks5 代理转 http 代理
+==============
+
+python sharp-proxy/socks2http.py  -src 1080 -to 1082
