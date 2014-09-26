@@ -23,9 +23,10 @@ sharp-proxy
 socks-thread.py 基于线程的版本 (不在维护了)
 socks-gevent.py 基于gevent的版本   pip install gevent
 
+
 使用方法:
-
-
+----
+'''
 python sharp-proxy/socks-gevent.py --help
 Usage:
 一个解决复杂网络的 代理服务
@@ -37,7 +38,7 @@ ppp0: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1444
 python socks-gevent.py -i 10.3.10.55 -p 1080
 配合浏览器插件 : switchy
 
-
+'''
 
 Options:
   -h, --help            show this help message and exit
