@@ -29,23 +29,37 @@ sharp-proxy
 ----
 
     python sharp-proxy/socks-gevent.py --help
+    $ python socks-gevent.py --help
     Usage:
     一个解决复杂网络的 代理服务
     获取vpm 的 本地ip
     ifconfig | grep ppp -A 4
     ppp0: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1444
         inet 10.3.10.55 --> 10.3.10.1 netmask 0xffffff00
-
+    
+    python socks-gevent.py -i ppp0 -p 1080  #绑定vpn 或者adsl的地址
+    python socks-gevent.py -i ppp1 -p 1080
+    
+    使用指定ip的方式
     python socks-gevent.py -i 10.3.10.55 -p 1080
     配合浏览器插件 : switchy
-
-
-
+    
+    配置好脚本
+    python install.py
+    ip-up
+    软连接 到
+    sudo ln -s /Users/sdm/share/code/sharp-proxy/ip-up /etc/ppp/ip-up
+    
+    
+    
     Options:
       -h, --help            show this help message and exit
-      -i IP, --ip=IP        要的绑定ip出口的地址, unix/linux/mac
+      -i IP, --ip=IP        要的绑定ip出口的地址, ppp0   unix/linux/mac
                             ipconfig ,windows ipconfig 获取
       -p PORT, --port=PORT  绑定的socks5代理的本地端口推荐使用 1080
+    #配置 ppp自动启动代理脚本 
+    sudo python install.py
+    ln -s /Users/sdm/share/code/sharp-proxy/ip-up=>/etc/ppp/ip-up
 
 ----
 

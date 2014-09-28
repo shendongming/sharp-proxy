@@ -6,11 +6,12 @@ __author__ = 'sdm'
 import socket
 import sys
 import struct
-
+import os
 reload(sys)
 sys.setdefaultencoding('utf-8')
 from optparse import OptionParser
 
+import re
 import gevent
 from gevent import monkey;
 
@@ -84,6 +85,9 @@ def handle_tcp(sock, remote):
         if remote in r:
             if sock.send(remote.recv(4096)) <= 0: break
 
+def get_ppp0():
+    import netifaces as ni
+
 
 def main():
     global options
@@ -94,23 +98,48 @@ ifconfig | grep ppp -A 4
 ppp0: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1444
 	inet 10.3.10.55 --> 10.3.10.1 netmask 0xffffff00
 
+python socks-gevent.py -i ppp0 -p 1080  #绑定vpn 或者adsl的地址
+python socks-gevent.py -i ppp1 -p 1080
+
+使用指定ip的方式
 python socks-gevent.py -i 10.3.10.55 -p 1080
 配合浏览器插件 : switchy
 
-    '''
+配置好脚本
+python install.py
+ip-up
+软连接 到
+sudo ln -s %s/ip-up /etc/ppp/ip-up
+
+    ''' % (os.path.dirname(os.path.realpath(__file__)),)
     parser = OptionParser(usage=usage)
 
     parser.add_option("-i", "--ip", dest="ip",
-                      help="要的绑定ip出口的地址, unix/linux/mac  ipconfig ,windows ipconfig 获取")
+                      help="要的绑定ip出口的地址, ppp0 \n unix/linux/mac  ipconfig ,windows ipconfig 获取")
     parser.add_option("-p", "--port", dest="port", default=1080, type="int",
                       help="绑定的socks5代理的本地端口推荐使用 1080 ")
 
-    #parser.add_option("-p2", "--port2", dest="port2", default=1082, type="int",
-    #                  help="绑定的http代理的本地端口推荐使用 1080 ")
-
     options, arg = parser.parse_args()
-    # print help(options)
-    # print (options['ip'])
+    print "opt:",options
+
+    if not options.ip is None and  options.ip[0:3]=='ppp':
+        '使用指定接口的方式'
+        import netifaces as ni
+        interfaces=ni.interfaces()
+        if not options.ip in interfaces:
+            print("error  interface error,available interface:\n")
+            for p  in interfaces:
+                print p
+            return
+        a=ni.ifaddresses(options.ip)
+        print 'a',a
+        print a
+        if not a.has_key(2) or not len(a[2]) :
+            print "接口错误"
+            return
+        options.ip=a[2][0]['addr']
+        print("new ip",options.ip)
+
     print('listen port:', options.port, 'local ip:', options.ip)
     server = gevent.server.StreamServer(('', options.port), hanlder)
     server.serve_forever()

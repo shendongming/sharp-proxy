@@ -1,0 +1,4 @@
+gevent==1.0.1
+greenlet==0.4.4
+netifaces==0.10.4
+wsgiref==0.1.2
